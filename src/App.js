@@ -21,6 +21,7 @@ export default () => {
       ];
       
       const paymentJsonBase64 = multiPayments.generatePayment({ payments });
+     
       const message = `Send \n[send](payment:${paymentJsonBase64})`;
       const url = multiPayments.getLink(message);
       setUrl(url);
@@ -31,6 +32,6 @@ export default () => {
   return <div>
     <input placeholder="amount" onChange={(ev) => setAmount(ev.target.value)} />
     <br/>
-    <a href={url}>Send</a>
+    <a href={Number(amount) > 0 ? url : undefined}>Send</a>
   </div>;
 };
