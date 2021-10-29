@@ -1,2 +1,2 @@
-# Obyte-multi-payments
+# Obyte-browser-chat
 ## Example of using the library

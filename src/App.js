@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import multiPayments from "./multiPayments";
+import chatInstance from "./chat";
 
-export default () => {
+export const App = () => {
   const [url, setUrl] = useState();
   const [amount, setAmount] = useState();
 
   useEffect(() => {
-    if(amount){
+    if (amount) {
       const payments = [
         {
           address: "2QVJOY3BRRGWP7IOYL64O5BU3WLUJ4TZ",
@@ -19,19 +19,19 @@ export default () => {
           asset: "base"
         }
       ];
-      
-      const paymentJsonBase64 = multiPayments.generatePayment({ payments });
-     
+
+      const paymentJsonBase64 = chatInstance.generatePaymentString({ payments });
+
       const message = `Send \n[send](payment:${paymentJsonBase64})`;
-      const url = multiPayments.getLink(message);
+      const url = chatInstance.sendMessageAfterPairing(message)
+
       setUrl(url);
     }
-    
+
   }, [amount]);
 
-  return <div>
-    <input placeholder="amount" onChange={(ev) => setAmount(ev.target.value)} />
-    <br/>
-    <a href={Number(amount) > 0 ? url : undefined}>Send</a>
+  return <div style={{ fontSize: "18px" }}>
+    <input placeholder="amount" onChange={(ev) => setAmount(ev.target.value)} style={{ marginRight: 5, fontSize: "18px" }} />
+    {Number(amount) > 0 ? <a href={url}>Send</a> : null}
   </div>;
 };
